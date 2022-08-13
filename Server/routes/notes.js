@@ -14,9 +14,9 @@ notesRouter.get("/fetchallnotes", fetchUser, async (req, res) => {
   }
 });
 
-//Route 2:add new notes using Get:"/note/addnote" login required
+//Route 2:add new notes using Get:"/notes/addnote" login required
 notesRouter.post(
-  "/addnote   ",
+  "/addnote",
   fetchUser,
   [
     body("title", "Enter a valid title").isLength({ min: 3 }),
@@ -35,16 +35,14 @@ notesRouter.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const notes = new Notes({
-        title,
-        description,
-        tag,
-        user: req.user.id,
-      });
+      const note = new Notes({
+        title, description, tag, user: req.user.id
+    })
+    const savedNote = await note.save()
 
-      const savedNote = await notes.save();
+    res.json(savedNote)
 
-      res.json(savedNote);
+  
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Internal Server Error");
