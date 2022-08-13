@@ -5,7 +5,7 @@ connectToMongo();
 
 let port = 5000;
 app.listen(port, () => {
-  console.log(`example app listening at port ${port}`);
+  console.log(`eNotebook listening at port ${port}`);
 });
 app.use(express.json());
 const authRoutes = require("./routes/auth");
