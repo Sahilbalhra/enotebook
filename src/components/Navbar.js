@@ -1,9 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
+  let navigate = useNavigate();
+  const handleLogOut = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -45,14 +51,20 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <from className="d-flex">
-            <Link to="/login" className="btn btn-primary mx-2" role="button">
-              Log In
-            </Link>
-            <Link to="/signup" className="btn btn-primary mx-2" role="button">
-              SignUp
-            </Link>
-          </from>
+          {localStorage.getItem("token") ? (
+            <button className="btn btn-primary" onClick={handleLogOut}>
+              logout
+            </button>
+          ) : (
+            <from className="d-flex">
+              <Link to="/login" className="btn btn-primary mx-2" role="button">
+                Log In
+              </Link>
+              <Link to="/signup" className="btn btn-primary mx-2" role="button">
+                SignUp
+              </Link>
+            </from>
+          )}
         </div>
       </div>
     </nav>

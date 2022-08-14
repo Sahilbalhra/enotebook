@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import AddNote from "./AddNote";
 import NoteItem from "./NoteItem";
+import { useNavigate } from "react-router-dom";
 
-const Notes = ({showAlert}) => {
+const Notes = ({ showAlert }) => {
   const context = useContext(NoteContext);
   const ref = useRef(null);
+  let navigate = useNavigate();
   const refClose = useRef(null);
   const { notes, getNotes, editNote } = context;
   const [note, setNote] = useState({
@@ -17,6 +19,10 @@ const Notes = ({showAlert}) => {
   });
   useEffect(() => {
     getNotes();
+    if (localStorage.getItem("token")) {
+    } else {
+      navigate("/login");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const updateNote = (currentNote) => {

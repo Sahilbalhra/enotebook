@@ -23,8 +23,8 @@ const Login = ({ showAlert }) => {
     if (json.success) {
       //redirect
       localStorage.setItem("token", json.jwtAuthToken);
-      navigate("/");
       showAlert("Logged In Successfully", "success");
+      navigate("/");
     } else {
       showAlert("Invalid Credentials", "danger");
     }
