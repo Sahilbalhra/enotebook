@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -91,7 +91,16 @@ const Login = () => {
                             onChange={onChange}
                           />
                         </div>
-                        <div className="pt-1 mb-4">
+                        <p className="pb-lg-2">
+                          Don't have an account?{" "}
+                          <Link
+                            to="/signup"
+                            style={{ color: "#393f81", textDecoration: "none" }}
+                          >
+                            Register here
+                          </Link>
+                        </p>
+                        <div className="pt-1">
                           <button
                             className="btn btn-dark btn-lg btn-block"
                             type="button"
@@ -100,18 +109,6 @@ const Login = () => {
                             Login
                           </button>
                         </div>
-                        <a className="small text-muted" href="#!">
-                          Forgot password?
-                        </a>
-                        <p
-                          className="mb-5 pb-lg-2"
-                          style={{ color: "#393f81" }}
-                        >
-                          Don't have an account?{" "}
-                          <a href="#!" style={{ color: "#393f81" }}>
-                            Register here
-                          </a>
-                        </p>
                       </form>
                     </div>
                   </div>
