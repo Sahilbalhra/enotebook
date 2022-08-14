@@ -66,6 +66,7 @@ authRouter.post(
     body("password", "Password cannot be black").exists(),
   ],
   async (req, res) => {
+    let success = false;
     // if there are errors return bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -77,6 +78,7 @@ authRouter.post(
       //if user not found
       if (!user) {
         return res.status(400).json({
+          success,
           error: "Please try to login with correct credentials",
         });
       }
@@ -85,6 +87,7 @@ authRouter.post(
       //if password not match
       if (!passwordCompare) {
         return res.status(400).json({
+          success,
           error: "Please try to login with correct credentials",
         });
       }
@@ -96,7 +99,9 @@ authRouter.post(
       };
       //jwt token
       var jwtAuthToken = jwt.sign(data, JWT_SECRET);
+      success = true;
       res.json({
+        success,
         jwtAuthToken,
       });
     } catch (error) {

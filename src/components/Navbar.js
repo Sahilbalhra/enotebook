@@ -8,7 +8,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          ENotebook
+          eNoteBook
         </Link>
         <button
           className="navbar-toggler"
@@ -45,6 +45,14 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
+          <from className="d-flex">
+            <Link to="/login" className="btn btn-primary mx-2" role="button">
+              Log In
+            </Link>
+            <Link to="/signup" className="btn btn-primary mx-2" role="button">
+              SignUp
+            </Link>
+          </from>
         </div>
       </div>
     </nav>
