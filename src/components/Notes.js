@@ -4,7 +4,7 @@ import NoteContext from "../context/notes/NoteContext";
 import AddNote from "./AddNote";
 import NoteItem from "./NoteItem";
 
-const Notes = () => {
+const Notes = ({showAlert}) => {
   const context = useContext(NoteContext);
   const ref = useRef(null);
   const refClose = useRef(null);
@@ -27,6 +27,7 @@ const Notes = () => {
       edescription: currentNote.description,
       etag: currentNote.tag,
     });
+    showAlert("Note updated", "success");
   };
 
   const handleClick = (e) => {
@@ -39,7 +40,7 @@ const Notes = () => {
   };
   return (
     <>
-      <AddNote />
+      <AddNote showAlert={showAlert} />
       <button
         ref={ref}
         type="button"

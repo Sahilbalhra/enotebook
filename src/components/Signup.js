@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const Signup = () => {
+const Signup = ({showAlert}) => {
   const host = "http://localhost:5000";
   let navigate = useNavigate();
   const [credentials, setCredentials] = useState({
@@ -31,8 +31,9 @@ const Signup = () => {
         //redirect
         // localStorage.setItem("token", json.jwtAuthToken);
         navigate("/login");
+        showAlert("Account created Successfully","success");
       } else {
-        alert("Enter proper Credentials");
+        showAlert("Invalid Credentials","danger");
       }
     } else {
       setError("Confirm Password and Password are not same");
