@@ -5,7 +5,6 @@ import NoteContext from "./NoteContext";
 const NoteState = (props) => {
   const host = "http://localhost:5000";
 
-
   const [notes, setNotes] = useState([]);
   //Get all note
   const getNotes = async () => {
@@ -26,7 +25,7 @@ const NoteState = (props) => {
   //Add a note
   const addNote = async (title, description, tag) => {
     //todo api call
-    const response=await fetch(`${host}/api/notes/addnote`, {
+    const response = await fetch(`${host}/api/notes/addnote`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +35,7 @@ const NoteState = (props) => {
       body: JSON.stringify({ title, description, tag }),
     });
     const note = await response.json();
-    setNotes(notes.concat(note))
+    setNotes(notes.concat(note));
 
     console.log("Adding a new note");
     // let note = {
@@ -52,9 +51,8 @@ const NoteState = (props) => {
   };
 
   //delete a note
-  const deleteNote = async(id) => {
-
-    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+  const deleteNote = async (id) => {
+    await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -62,8 +60,8 @@ const NoteState = (props) => {
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJmNWQ2ZjFiY2EzNzNhOWFkMDljNWQwIn0sImlhdCI6MTY2MDI4MDUxM30.OQt5x8eijvxRNkpxB-ofXD3vBQemGI7F093qT28uBqc",
       },
     });
-    const json = await response.json();
-    console.log(json);
+    // const json = await response.json();
+    // console.log(json);
 
     console.log("Deleting the node with id", id);
     let newNotes = notes.filter((note) => {
@@ -75,8 +73,8 @@ const NoteState = (props) => {
   //edit a note
   const editNote = async (id, title, description, tag) => {
     //api call
-    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: "POST",
+    await fetch(`${host}/api/notes/updatenote/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "auth-token":
@@ -84,22 +82,24 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
-    // const json= response.json();
 
+    let newNotes = JSON.parse(JSON.stringify(notes));
     //logic
-    for (let index = 0; index < notes.length; index++) {
-      let element = notes[index];
+    for (let index = 0; index < newNotes.length; index++) {
+      let element = newNotes[index];
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        newNotes[index].title = title;
+        newNotes[index].description = description;
+        newNotes[index].tag = tag;
+        break;
       }
     }
+    setNotes(newNotes);
   };
 
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, addNote, deleteNote, editNote,getNotes }}
+      value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}
     >
       {props.children}
     </NoteContext.Provider>

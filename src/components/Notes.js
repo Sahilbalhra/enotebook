@@ -40,7 +40,6 @@ const Notes = () => {
   return (
     <>
       <AddNote />
-
       <button
         ref={ref}
         type="button"
@@ -144,6 +143,9 @@ const Notes = () => {
 
       <div className="row my-3">
         <h2>Your Note</h2>
+        {notes.length === 0 && (
+          <div className="container mx-2">No notes To display</div>
+        )}
         {notes.map((note) => {
           return (
             <NoteItem key={note._id} note={note} updateNote={updateNote} />
